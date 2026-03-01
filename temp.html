@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Mooti!</title>
+    <style>
+        /* --- Lovely & Creative CSS Styles --- */
+        
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;600&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+            font-family: 'Poppins', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            text-align: center;
+        }
+
+        /* Floating Hearts Animation */
+        .heart {
+            position: absolute;
+            bottom: -20px;
+            background: rgba(255, 255, 255, 0.3);
+            animation: flyUp 10s linear infinite;
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        @keyframes flyUp {
+            0% { bottom: -20px; transform: translateX(0) rotate(0deg); opacity: 1; }
+            100% { bottom: 120vh; transform: translateX(100px) rotate(360deg); opacity: 0; }
+        }
+
+        /* Main Content */
+        .container {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(255, 105, 135, 0.3);
+            max-width: 600px;
+            width: 90%;
+            z-index: 10;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        p.date {
+            font-size: 1.5rem;
+            margin: 10px 0 40px 0;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .from-rahul {
+            font-size: 1.1rem;
+            margin-top: 30px;
+            font-style: italic;
+        }
+
+        /* The RUNAWAY Button */
+        #photoBtn {
+            background-color: #fff;
+            color: #ff6b81;
+            border: none;
+            padding: 18px 45px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.1s;
+            position: relative;
+            margin-top: 20px;
+        }
+
+        /* Hint text */
+        .hint {
+            margin-top: 25px;
+            font-size: 1rem;
+            opacity: 0.9;
+            background: rgba(255,255,255,0.3);
+            padding: 10px 20px;
+            border-radius: 20px;
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 3rem; }
+            h2 { font-size: 2rem; }
+            .container { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Hearts -->
+    <div id="hearts-container"></div>
+
+    <div class="container">
+        <h1>Happy Birthday!</h1>
+        <h2>Moti🐽🐷</h2>
+        <p class="date">May 16</p>
+        
+        <p>To the most amazing best friend ever! ❤️</p>
+        
+        <!-- The Runaway Button -->
+        <button id="photoBtn">📸 Your Ugly Photos</button>
+        
+        <p class="hint">😂 Try to click the button... I dare you!</p>
+        
+        <p class="from-rahul">- From your best friend, Rahul</p>
+    </div>
+
+    <script>
+        // Create floating hearts
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            
+            // Random size between 10px and 30px
+            const size = Math.random() * 20 + 10;
+            heart.style.width = size + 'px';
+            heart.style.height = size + 'px';
+            
+            // Random position
+            heart.style.left = Math.random() * 100 + 'vw';
+            
+            // Random animation duration
+            heart.style.animationDuration = (Math.random() * 5 + 8) + 's';
+            
+            document.getElementById('hearts-container').appendChild(heart);
+            
+            // Remove heart after animation
+            setTimeout(() => {
+                heart.remove();
+            }, 10000);
+        }
+
+        // Create hearts every 300ms
+        setInterval(createHeart, 300);
+
+
+        // --- RUNAWAY BUTTON SCRIPT ---
+        const button = document.getElementById('photoBtn');
+        const container = document.querySelector('.container');
+
+        // Move button when mouse gets close
+        document.addEventListener('mousemove', function(e) {
+            const btnRect = button.getBoundingClientRect();
+            const btnCenterX = btnRect.left + btnRect.width / 2;
+            const btnCenterY = btnRect.top + btnRect.height / 2;
+            
+            // Distance from mouse to button center
+            const distance = Math.sqrt(
+                Math.pow(e.clientX - btnCenterX, 2) + 
+                Math.pow(e.clientY - btnCenterY, 2)
+            );
+
+            // If mouse is within 100px, move the button!
+            if (distance < 120) {
+                // Get container dimensions
+                const containerRect = container.getBoundingClientRect();
+                
+                // Calculate new random position within container
+                const maxX = containerRect.width - button.offsetWidth - 40;
+                const maxY = containerRect.height - button.offsetHeight - 40;
+                
+                const newX = Math.random() * maxX + 20;
+                const newY = Math.random() * maxY + 20;
+                
+                button.style.position = 'absolute';
+                button.style.left = newX + 'px';
+                button.style.top = newY + 'px';
+            }
+        });
+
+        // Make button unclickable (just in case!)
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            // Flash the button red briefly
+            button.style.backgroundColor = '#ff4757';
+            button.style.transform = 'scale(0.9)';
+            setTimeout(() => {
+                button.style.backgroundColor = '#fff';
+                button.style.transform = 'scale(1)';
+            }, 200);
+        });
+    </script>
+</body>
+</html>
